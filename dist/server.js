@@ -1,11 +1,13 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const app = express_1.default();
+
+var _express = _interopRequireDefault(require("express"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const app = (0, _express.default)();
 app.get("/", (request, response) => {
-    return response.json({ Serve: "ON" });
+  return response.json({
+    Serve: "on"
+  });
 });
 app.listen(4444);
