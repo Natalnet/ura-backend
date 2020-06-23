@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model borroweds {
+  amount      Int
+  created_at  DateTime
+  id          Int        @default(autoincrement()) @id
+  item_id     Int
+  returned_at DateTime?
+  updated_at  DateTime
+  user_id     Int
+  invetories  invetories @relation(fields: [item_id], references: [id])
+  users       users      @relation(fields: [user_id], references: [id])
+
+  @@index([item_id], name: "item_id")
+  @@index([user_id], name: "user_id")
+}
+
+model files {
+  created_at DateTime
+  id         Int      @default(autoincrement()) @id
+  name       String
+  path       String   @unique
+  updated_at DateTime
+  users      users[]
+}
+
+model invetories {
+  amount           Int
+  amount_available Int
+  borrowed_amount  Int
+  created_at       DateTime
+  id               Int         @default(autoincrement()) @id
+  location         String
+  name             String
+  updated_at       DateTime
+  borroweds        borroweds[]
+}
+
+model sequelizemeta {
+  name String @id
+}
+
+model users {
+  administrador Boolean     @default(false)
+  avatar_id     Int?
+  created_at    DateTime
+  email         String      @unique
+  id            Int         @default(autoincrement()) @id
+  name          String
+  password_hash String
+  project       String
+  updated_at    DateTime
+  files         files?      @relation(fields: [avatar_id], references: [id])
+  borroweds     borroweds[]
+
+  @@index([avatar_id], name: "users_avatar_id_foreign_idx")
+}

@@ -1,9 +1,9 @@
-import express from "express";
+import express from 'express'
+import route from './routes'
 
-const app = express();
+const app = express()
 
-app.get("/", (request, response) => {
-  return response.json({ Serve: "on" });
-});
+app.use(express.json())
+app.use(route)
 
-app.listen(4444);
+app.listen(4444)
